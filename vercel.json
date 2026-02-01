@@ -1,0 +1,13 @@
+{
+    "functions": {
+        "api/*.py": {
+            "excludeFiles": "{app,node_modules,data/raw,notebooks,results}/**"
+        }
+    },
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "api/main.py"
+        }
+    ]
+}

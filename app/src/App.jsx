@@ -27,8 +27,9 @@ import {
 
 import './index.css';
 
-// API Base URL
-const API_URL = 'http://localhost:8000';
+// API Base URL - Automatically switch between local and production
+const API_URL = import.meta.env.VITE_API_URL ||
+  (window.location.hostname === 'localhost' ? 'http://localhost:8000' : '/api');
 
 // Premium Loading Screen Component
 const LoadingScreen = ({ progress, status }) => {

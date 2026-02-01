@@ -1,0 +1,10 @@
+{
+    "name": "social-media-recommender-root",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "install-frontend": "cd app && npm install",
+        "build-frontend": "cd app && npm run build",
+        "build": "npm run install-frontend && npm run build-frontend"
+    }
+}

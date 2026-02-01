@@ -1,0 +1,30 @@
+# Ignore local data and large assets to keep the Vercel deployment lean
+node_modules
+app/node_modules
+.git
+.vscode
+.ipynb_checkpoints
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore raw data (only processed data is needed)
+data/raw/
+
+# Ignore notebooks and results
+notebooks/
+results/
+
+# Ignore build artifacts
+dist/
+app/dist/
+
+# Ignore local virtual environments
+venv/
+env/
+.venv/
+
+# Ignore documentation
+README.md
+docs/

@@ -5,23 +5,31 @@ Hybrid recommendation system combining content-based and collaborative filtering
 
 import pandas as pd
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 import os
 import joblib
 
 
 def create_similarity_matrix(X: np.ndarray) -> np.ndarray:
     """
-    Calculate user-user similarity using cosine similarity.
+    Calculate user-user similarity using cosine similarity with numpy.
     
     Args:
-        X: Feature matrix
+        X: Feature matrix (n_users x n_features)
     
     Returns:
         Similarity matrix (n_users x n_users)
     """
-    print("Calculating cosine similarity matrix...")
-    similarity_matrix = cosine_similarity(X)
+    print("Calculating cosine similarity matrix with numpy...")
+    
+    # Normalize the rows
+    norm = np.linalg.norm(X, axis=1, keepdims=True)
+    # Avoid division by zero
+    norm[norm == 0] = 1
+    X_normalized = X / norm
+    
+    # Matrix multiplication to get cosine similarity: (A / |A|) . (B / |B|).T
+    similarity_matrix = np.dot(X_normalized, X_normalized.T)
+    
     print(f"Similarity matrix shape: {similarity_matrix.shape}")
     
     return similarity_matrix

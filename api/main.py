@@ -20,7 +20,8 @@ from recommendation import get_recommendations, create_similarity_matrix
 app = FastAPI(
     title="Social Media Recommender API",
     description="ML-powered recommendation engine API",
-    version="1.0.0"
+    version="1.0.0",
+    root_path="/api" if os.environ.get("VERCEL") else ""
 )
 
 # Enable CORS for React frontend
