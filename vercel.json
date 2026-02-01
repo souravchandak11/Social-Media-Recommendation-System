@@ -1,6 +1,6 @@
 {
     "functions": {
-        "api/*.py": {
+        "api/main.py": {
             "excludeFiles": "{app,node_modules,data/raw,notebooks,results}/**"
         }
     },
