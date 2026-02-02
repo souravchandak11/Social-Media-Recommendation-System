@@ -43,19 +43,26 @@ DATA = {
 
 
 def load_data():
-    """Load processed data on startup."""
+    """Load processed data on startup. Auto-generates if missing."""
     base_dir = os.path.dirname(os.path.dirname(__file__))
     data_dir = os.path.join(base_dir, 'data', 'processed')
     
     # Load user data
     df_path = os.path.join(data_dir, 'users_segmented.csv')
-    if os.path.exists(df_path):
-        DATA["df"] = pd.read_csv(df_path)
-    else:
-        raise FileNotFoundError("Run pipeline first: python run_pipeline.py")
+    sim_path = os.path.join(data_dir, 'similarity_matrix.npy')
+    
+    # Auto-generate data if missing
+    if not os.path.exists(df_path) or not os.path.exists(sim_path):
+        print("⚠ Data files not found. Running pipeline to generate...")
+        sys.path.insert(0, base_dir)
+        from run_pipeline import run_pipeline
+        run_pipeline()
+        print("✓ Pipeline completed successfully")
+    
+    # Load user data
+    DATA["df"] = pd.read_csv(df_path)
     
     # Load similarity matrix
-    sim_path = os.path.join(data_dir, 'similarity_matrix.npy')
     if os.path.exists(sim_path):
         DATA["similarity_matrix"] = np.load(sim_path)
     
