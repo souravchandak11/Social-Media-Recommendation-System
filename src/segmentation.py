@@ -7,6 +7,8 @@ import pandas as pd
 import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend for servers
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
