@@ -142,10 +142,11 @@ def load_data():
     df_path = os.path.join(data_dir, 'users_segmented.csv')
     if not os.path.exists(df_path):
         # Trigger pipeline if data is missing
-        sys.path.append(base_dir)
-        from run_pipeline import run_pipeline
-        run_pipeline()
-        st.rerun()
+        with st.spinner("🚀 Initializing recommendation system (first-time setup)..."):
+            sys.path.append(base_dir)
+            from run_pipeline import run_pipeline
+            run_pipeline()
+            st.rerun()
     
     df = pd.read_csv(df_path)
     
