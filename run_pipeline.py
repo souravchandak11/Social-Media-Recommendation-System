@@ -34,6 +34,10 @@ def run_pipeline():
     start_time = time.time()
     base_dir = os.path.dirname(__file__)
     
+    # Check if running on Render (memory-limited)
+    is_cloud = os.environ.get('RENDER') or os.environ.get('PORT')
+    n_users = 1000 if is_cloud else 10000  # Smaller dataset for cloud
+    
     # =========================================================================
     # Step 1: Data Generation
     # =========================================================================
@@ -41,7 +45,7 @@ def run_pipeline():
     print("STEP 1: DATA GENERATION")
     print("="*70)
     
-    df = generate_synthetic_data(n_users=10000)
+    df = generate_synthetic_data(n_users=n_users)
     raw_path = os.path.join(base_dir, 'data', 'raw', 'social_media_users.csv')
     save_raw_data(df, raw_path)
     
