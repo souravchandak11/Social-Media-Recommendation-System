@@ -3,7 +3,9 @@ import { Layers, ArrowUpRight, Users, Sparkles } from 'lucide-react';
 import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
 
 const CircularProgress = ({ value, max, color, label, delay }) => {
-  const percentage = (value / max) * 100;
+  const safeMax = max > 0 ? max : 1;
+  const safeValue = value || 0;
+  const percentage = Math.min((safeValue / safeMax) * 100, 100);
   const circumference = 2 * Math.PI * 28;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
@@ -121,16 +123,18 @@ const SegmentDistributionCard = ({ segmentStats, users }) => {
 
       {/* Progress Circles */}
       <div className="progress-grid">
-        {topSegments.map((seg, index) => (
+        {topSegments.length > 0 ? topSegments.map((seg, index) => (
           <CircularProgress
-            key={seg.name}
-            value={seg.count}
-            max={totalUsers / 3}
-            color={seg.color}
-            label={seg.name.split(' ')[0]}
+            key={seg.name || index}
+            value={seg.count || 0}
+            max={Math.max(totalUsers / 3, 1)}
+            color={seg.color || '#6b7280'}
+            label={(seg.name || 'Segment').split(' ')[0]}
             delay={0.3 + index * 0.1}
           />
-        ))}
+        )) : (
+          <div className="empty-state">No segments available</div>
+        )}
       </div>
 
       {/* Mini Chart */}

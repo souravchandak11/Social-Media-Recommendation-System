@@ -18,16 +18,19 @@ const AnimatedValue = ({ value, suffix = '' }) => {
 const SegmentStatsCard = ({ segmentStats }) => {
   const segments = Object.values(segmentStats || {});
 
-  const pieData = segments.map(seg => ({
-    name: seg.name,
-    value: seg.count,
-    color: seg.color,
-    avgEngagement: seg.avgEngagement
-  }));
+  // Ensure pieData has valid values to prevent NaN in SVG
+  const pieData = segments.length > 0
+    ? segments.map(seg => ({
+      name: seg.name || 'Unknown',
+      value: seg.count || 0,
+      color: seg.color || '#6b7280',
+      avgEngagement: seg.avgEngagement || 0
+    }))
+    : [{ name: 'No Data', value: 1, color: '#6b7280', avgEngagement: 0 }];
 
-  const totalUsers = segments.reduce((acc, seg) => acc + seg.count, 0);
+  const totalUsers = segments.reduce((acc, seg) => acc + (seg.count || 0), 0) || 1;
   const avgEngagement = segments.length > 0
-    ? (segments.reduce((acc, seg) => acc + seg.avgEngagement, 0) / segments.length).toFixed(1)
+    ? (segments.reduce((acc, seg) => acc + (seg.avgEngagement || 0), 0) / segments.length).toFixed(1)
     : 0;
 
   return (

@@ -48,10 +48,10 @@ const UserProfileCard = ({ user, weeklyTrend }) => {
   const maxIndex = chartData.findIndex(d => (d.engagement || d.value) === maxValue);
 
   const stats = [
-    { icon: Users, label: 'Followers', value: user.followers, color: '#8b5cf6', glow: 'rgba(139, 92, 246, 0.3)' },
-    { icon: Heart, label: 'Engagement', value: parseFloat(user.engagementRate), suffix: '%', color: '#f87171', glow: 'rgba(248, 113, 113, 0.3)' },
-    { icon: Zap, label: 'Influence', value: parseFloat(user.influenceScore) * 100, suffix: '', color: '#10b981', glow: 'rgba(16, 185, 129, 0.3)' },
-    { icon: TrendingUp, label: 'Posts', value: user.posts, color: '#f59e0b', glow: 'rgba(245, 158, 11, 0.3)' },
+    { icon: Users, label: 'Followers', value: user.followers || 0, color: '#8b5cf6', glow: 'rgba(139, 92, 246, 0.3)' },
+    { icon: Heart, label: 'Engagement', value: parseFloat(user.engagementRate) || 0, suffix: '%', color: '#f87171', glow: 'rgba(248, 113, 113, 0.3)' },
+    { icon: Zap, label: 'Influence', value: (parseFloat(user.influenceScore) || 0) * 100, suffix: '', color: '#10b981', glow: 'rgba(16, 185, 129, 0.3)' },
+    { icon: TrendingUp, label: 'Posts', value: user.posts || 0, color: '#f59e0b', glow: 'rgba(245, 158, 11, 0.3)' },
   ];
 
   return (
