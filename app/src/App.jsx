@@ -31,7 +31,7 @@ import './index.css';
 const API_URL = import.meta.env.VITE_API_URL ||
   (window.location.hostname === 'localhost'
     ? 'http://localhost:8000'
-    : 'https://social-media-recommendation-system.onrender.com');
+    : 'https://social-media-recommendation-system-1.onrender.com');
 
 // Premium Loading Screen Component
 const LoadingScreen = ({ progress, status }) => {
