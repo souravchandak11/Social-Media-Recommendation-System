@@ -135,15 +135,19 @@ CITY_COORDS = {
 
 @st.cache_data
 def load_data():
-    """Load processed data and similarity matrix."""
+    """Load processed data and similarity matrix. Auto-generates if missing."""
     base_dir = os.path.dirname(os.path.dirname(__file__))
     data_dir = os.path.join(base_dir, 'data', 'processed')
     
     df_path = os.path.join(data_dir, 'users_segmented.csv')
-    if os.path.exists(df_path):
-        df = pd.read_csv(df_path)
-    else:
-        df = pd.read_csv(os.path.join(data_dir, 'cleaned_users.csv'))
+    if not os.path.exists(df_path):
+        # Trigger pipeline if data is missing
+        sys.path.append(base_dir)
+        from run_pipeline import run_pipeline
+        run_pipeline()
+        st.rerun()
+    
+    df = pd.read_csv(df_path)
     
     sim_path = os.path.join(data_dir, 'similarity_matrix.npy')
     if os.path.exists(sim_path):
