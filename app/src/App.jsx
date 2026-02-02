@@ -27,9 +27,11 @@ import {
 
 import './index.css';
 
-// API Base URL - Automatically switch between local and production
+// API Base URL - Uses deployed backend, or falls back to localhost for development
 const API_URL = import.meta.env.VITE_API_URL ||
-  (window.location.hostname === 'localhost' ? 'http://localhost:8000' : '/api');
+  (window.location.hostname === 'localhost'
+    ? 'http://localhost:8000'
+    : 'https://social-media-recommendation-system.onrender.com');
 
 // Premium Loading Screen Component
 const LoadingScreen = ({ progress, status }) => {
